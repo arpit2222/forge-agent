@@ -11,7 +11,7 @@ export default function PipelineClient() {
     let active = true;
     const poll = async () => {
       try {
-        const res = await fetch("/api/state");
+        const res = await fetch("/api/state", { cache: "no-store" });
         const data = await res.json();
         if (active) setPipeline(data.pipeline);
       } catch {
