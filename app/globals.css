@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-canvas text-ink font-body;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(12, 11, 16, 0.2);
+  border-radius: 999px;
+}
+
+.gradient-border {
+  position: relative;
+  border-radius: 18px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(240,93,35,0.6), rgba(47,128,237,0.6), rgba(20,90,50,0.6));
+}
+
+.gradient-border > div {
+  border-radius: 17px;
+  background: #f4f1ea;
+}

@@ -1,0 +1,22 @@
+# Node
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Next.js
+.next
+out
+
+# Env
+.env
+
+# Local state
+logs/
+pipeline/
+projects/
+generated/
+
+# Misc
+.DS_Store
