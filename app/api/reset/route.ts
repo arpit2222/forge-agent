@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { PATHS } from "../../../lib/paths";
 
-const LOG_PATH = path.join(process.cwd(), "logs", "agent.log");
-const JOBS_PATH = path.join(process.cwd(), "pipeline", "jobs.json");
-const STATE_PATH = path.join(process.cwd(), "pipeline", "state.json");
-const PROJECTS_PATH = path.join(process.cwd(), "projects", "index.json");
-const GENERATED_DIR = path.join(process.cwd(), "generated");
+const LOG_PATH = path.join(PATHS.logsDir, "agent.log");
+const JOBS_PATH = path.join(PATHS.pipelineDir, "jobs.json");
+const STATE_PATH = path.join(PATHS.pipelineDir, "state.json");
+const PROJECTS_PATH = path.join(PATHS.projectsDir, "index.json");
 
 const initialState = {
   stages: [
@@ -22,15 +22,18 @@ const initialState = {
 
 export async function POST() {
   try {
+    fs.mkdirSync(PATHS.logsDir, { recursive: true });
+    fs.mkdirSync(PATHS.pipelineDir, { recursive: true });
+    fs.mkdirSync(PATHS.projectsDir, { recursive: true });
+    fs.mkdirSync(PATHS.generatedDir, { recursive: true });
+
     fs.writeFileSync(LOG_PATH, "", "utf-8");
     fs.writeFileSync(JOBS_PATH, "[]", "utf-8");
     fs.writeFileSync(PROJECTS_PATH, "[]", "utf-8");
     fs.writeFileSync(STATE_PATH, JSON.stringify(initialState, null, 2), "utf-8");
 
-    if (fs.existsSync(GENERATED_DIR)) {
-      for (const entry of fs.readdirSync(GENERATED_DIR)) {
-        fs.rmSync(path.join(GENERATED_DIR, entry), { recursive: true, force: true });
-      }
+    for (const entry of fs.readdirSync(PATHS.generatedDir)) {
+      fs.rmSync(path.join(PATHS.generatedDir, entry), { recursive: true, force: true });
     }
 
     return NextResponse.json({ ok: true });

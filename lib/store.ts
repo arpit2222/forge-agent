@@ -1,21 +1,18 @@
 import fs from "fs";
 import path from "path";
 import type { AgentJob, AgentStatus, GeneratedProject, PipelineState } from "./types";
+import { PATHS } from "./paths";
 
-const root = process.cwd();
-const logsDir = path.join(root, "logs");
-const pipelineDir = path.join(root, "pipeline");
-const projectsDir = path.join(root, "projects");
-
-const LOG_PATH = path.join(logsDir, "agent.log");
-const STATE_PATH = path.join(pipelineDir, "state.json");
-const JOBS_PATH = path.join(pipelineDir, "jobs.json");
-const PROJECTS_PATH = path.join(projectsDir, "index.json");
+const LOG_PATH = path.join(PATHS.logsDir, "agent.log");
+const STATE_PATH = path.join(PATHS.pipelineDir, "state.json");
+const JOBS_PATH = path.join(PATHS.pipelineDir, "jobs.json");
+const PROJECTS_PATH = path.join(PATHS.projectsDir, "index.json");
 
 export function ensureStore() {
-  if (!fs.existsSync(logsDir)) fs.mkdirSync(logsDir, { recursive: true });
-  if (!fs.existsSync(pipelineDir)) fs.mkdirSync(pipelineDir, { recursive: true });
-  if (!fs.existsSync(projectsDir)) fs.mkdirSync(projectsDir, { recursive: true });
+  if (!fs.existsSync(PATHS.logsDir)) fs.mkdirSync(PATHS.logsDir, { recursive: true });
+  if (!fs.existsSync(PATHS.pipelineDir)) fs.mkdirSync(PATHS.pipelineDir, { recursive: true });
+  if (!fs.existsSync(PATHS.projectsDir)) fs.mkdirSync(PATHS.projectsDir, { recursive: true });
+  if (!fs.existsSync(PATHS.generatedDir)) fs.mkdirSync(PATHS.generatedDir, { recursive: true });
 
   if (!fs.existsSync(LOG_PATH)) fs.writeFileSync(LOG_PATH, "", "utf-8");
   if (!fs.existsSync(STATE_PATH)) {

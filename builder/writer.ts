@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { PATHS } from "../lib/paths";
 
 export async function writeProject(project: {
   name: string;
@@ -7,7 +8,7 @@ export async function writeProject(project: {
   files: { path: string; content: string }[];
 }) {
   const projectId = `project-${Date.now()}`;
-  const outputDir = path.join(process.cwd(), "generated", projectId);
+  const outputDir = path.join(PATHS.generatedDir, projectId);
   fs.mkdirSync(outputDir, { recursive: true });
 
   for (const file of project.files) {
